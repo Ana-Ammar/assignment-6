@@ -15,13 +15,13 @@ const loadCategories = () => {
         });
 
         const defaultBtn = document.getElementById('default-btn')
-        defaultBtn.classList.add('bg-[#15803d]', 'text-white', 'font-medium')
-
-        defaultBtn.addEventListener('click' , () => {
+       if(defaultBtn) {
+         defaultBtn.classList.add('bg-[#15803d]', 'text-white', 'font-medium')
+          defaultBtn.addEventListener('click' , () => {
             loadAllPlants()
         })
-    
         
+        }
         loadAllPlants()
         clickedBtn()
     })
@@ -44,7 +44,13 @@ const clickedBtn = () => {
         
         if(e.target.classList.contains('cat-btns')){ 
             e.target.classList.add('bg-[#15803d]', 'text-white', 'font-medium') 
-            loadPlantsByCategories(e.target.id)
+            const categoriesId = e.target.id
+            if (e.target.id === 'default-btn') {
+                loadAllPlants();
+            } else {
+                loadPlantsByCategories(categoriesId)
+            }
+
         }
     })
 }
@@ -55,17 +61,20 @@ const treeContainer = document.getElementById('tree-container')
 
 
 const loadAllPlants = () => {
-    treeContainer.innerHTML = '';
+    showLoading()
     fetch('https://openapi.programming-hero.com/api/plants')
     .then(res => res.json())
     .then(data => {
         const plants = data.plants;
+        hideLoading()
         plants.forEach(plant => {
             treeContainer.innerHTML += `
-                <div id="${plant.id}" class="card p-4 bg-white rounded-lg">
-                <img src="${plant.image}" alt="" class="rounded-lg">
-                <h1 class="font-semibold mt-3">${plant.name}</h1>
-                <p class="text-[#4c545f] py-2">${plant.description}</p>
+                <div id="${plant.id}" class="card p-4 bg-white rounded-lg flex flex-col h-full">
+                <div class="h-48 overflow-hidden">
+                <img src="${plant.image}" alt="" class="rounded-lg w-full h-full object-cover">
+                </div>
+                <h1 class="font-semibold mt-3 cursor-pointer hover:font-bold">${plant.name}</h1>
+                <p class="text-[#4c545f] py-3">${plant.description}</p>
                 
                 <div class=" flex justify-between items-center">
                     <span class="badge badge-lg bg-[#dcfce7] text-[#15803D] rounded-full">${plant.category}</span>
@@ -73,7 +82,7 @@ const loadAllPlants = () => {
                     <p class="font-semibold">${plant.price}</p>
                 </div>
 
-                <div class="mt-3">
+                <div class="mt-3 flex flex-col content flex-1 h-full justify-end">
                   <button class="btn btn-block bg-[#15803d] text-white rounded-full">Add to Cart</button>
                
                 </div>
@@ -93,12 +102,14 @@ const loadPlantsByCategories = (id) => {
     .then(res => res.json())
     .then(data => {
         const plants = data.plants;
-        treeContainer.innerHTML = '';
+        hideLoading();
         plants.forEach(plant => {
             treeContainer.innerHTML += `
-                <div id="${plant.id}" class="card p-4 bg-white rounded-lg">
-                <img src="${plant.image}" alt="" class="rounded-lg">
-                <h1 onclick="my_modal_2.showModal()" class="font-semibold mt-3">${plant.name}</h1>
+                <div id="${plant.id}" class="card p-4 bg-white rounded-lg flex flex-col h-[400px]">
+                <div class="h-48 overflow-hidden">
+                <img src="${plant.image}" alt="" class="rounded-lg w-full h-full object-cover">
+                </div>
+                <h1 onclick="my_modal_2.showModal()" class="font-semibold mt-3 cursor-pointer hover:font-bold">${plant.name}</h1>
                 <p class="text-[#4c545f] py-2">${plant.description}</p>
                 
                 <div class=" flex justify-between items-center">
@@ -117,7 +128,7 @@ const loadPlantsByCategories = (id) => {
     })
 }
 
-// Bookmark 
+// Cart
 const cartContainer = document.getElementById('cart-container')
 let cart = [];
 
@@ -151,12 +162,12 @@ treeContainer.addEventListener('click', (e)=> {
         fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
         .then(res => res.json())
         .then(data => {
-            console.log(data)
+
             const plant = data.plants;
-            console.log(plant)
+
            treeDetail.innerHTML = `
-                <div id="${plant.id}" class="card p-4 bg-white rounded-lg">
-                <img src="${plant.image}" alt="" class="rounded-lg">
+                <div id="${plant.id}" class="card p-4 bg-white rounded-lg flex flex-col justify-between">
+                <img src="${plant.image}" alt="" class="rounded-lg h-2/4">
                 <h1 class="font-semibold mt-3">${plant.name}</h1>
                 <p class="text-[#4c545f] py-2">${plant.description}</p>
                 
@@ -182,7 +193,7 @@ const shoWinCart = (cart) => {
                 <p class="text-[#889396]">
                   <span>${tree.price}</span> 
                   <i class="fa-solid fa-xmark fa-xs"></i> 
-                  <span></span>
+                  <span>1</span>
                 </p>
               </div>
               <div onclick="cartProductDlt('${tree.id}')" class="text-[#889396] btn btn-ghost">
@@ -209,6 +220,10 @@ const showLoading = () => {
     <span class="loading loading-bars loading-xl"></span>
    </div>
     `
+}
+
+const hideLoading = () => {
+    treeContainer.innerHTML = '';
 }
 
 loadCategories()
