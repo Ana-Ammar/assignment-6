@@ -117,39 +117,18 @@
           </div>
 
           <div id="tree-container" class="md:col-span-3 md:grid grid-cols-3 gap-5">
-            <div class="card p-4 bg-white rounded-lg">
-                <img src="" alt="" class="rounded-lg">
-                <h1 class="font-semibold mt-3">Mango Tree</h1>
-                <p class="text-[#4c545f] py-2">A fast-growing tropical tree that produces delicious, juicy mangoes during summer. Its dense green</p>
-                
-                <div class=" flex justify-between items-center">
-                    <span class="badge badge-lg bg-[#dcfce7] text-[#15803D] rounded-full">Most Popular</span>
 
-                    <p class="font-semibold">৳500</p>
-                </div>
-
-                <div class="mt-3">
-                  <button class="btn btn-block bg-[#15803d] text-white rounded-full">Add to Cart</button>
-               
-                </div>
-            </div>
           </div>  
           
-          <div id="cart-container" class="bg-white p-4 rounded-2xl">
+          <div class="bg-white p-4 rounded-2xl col-span-1 self-start">
             <h1 class="text-2xl font-semibold mb-4">Your Cart</h1>
-            <div class="flex justify-between items-center bg-[#f0fdf4] p-3 rounded-lg mb-2">
-              <div>
-                <p class="font-semibold">Mango Tree</p>
-                <p class="text-[#889396]">500 <i class="fa-solid fa-xmark fa-xs"></i> 1</p>
+              <div id="cart-container">
+
               </div>
-              <div class="text-[#889396] btn btn-ghost">
-                <i class="fa-solid fa-xmark fa-xl"></i>
-              </div>
-            </div>
             <hr class="text-[#e9eaeb]">
             <div class="flex justify-between items-center font-semibold">
               <p>Total Price</p>
-              <p>৳100</p>
+              <p id="total-price">৳0</p>
             </div>
           </div>
           
@@ -219,7 +198,20 @@
           <button class="btn shadow-none border-0 rounded-full bg-[#facc15] text-[#15803d] mt-4">Donate Now</button>
         </fieldset>
     </section>
+
+
+    <!-- modal -->
+    
+    <dialog id="my_modal_1" class="modal">
+  <div id="tree-detail" class="modal-box">
+   
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
+
     </main>
+
 
     <footer class="p-6 bg-[#14532d]">
       <p class="text-center text-white">© 2025 Green Earth. All Rights Reserved.</p>
