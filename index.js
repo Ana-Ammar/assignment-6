@@ -69,7 +69,7 @@ const loadAllPlants = () => {
         hideLoading()
         plants.forEach(plant => {
             treeContainer.innerHTML += `
-                <div id="${plant.id}" class="card p-4 bg-white rounded-lg flex flex-col h-full">
+                <div id="${plant.id}" class="card p-4 bg-white rounded-lg flex flex-col">
                 <div class="h-48 overflow-hidden">
                 <img src="${plant.image}" alt="" class="rounded-lg w-full h-full object-cover">
                 </div>
@@ -82,7 +82,7 @@ const loadAllPlants = () => {
                     <p class="font-semibold">${plant.price}</p>
                 </div>
 
-                <div class="mt-3 flex flex-col content flex-1 h-full justify-end">
+                <div class="mt-3 flex flex-col content flex-1 h-full">
                   <button class="btn btn-block bg-[#15803d] text-white rounded-full">Add to Cart</button>
                
                 </div>
